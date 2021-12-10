@@ -65,8 +65,6 @@ class Heroes:
                     string_1_attack = '\nIts super effective!...'
                     string_2_attack = '\nIts not very effective...'
 
-
-        # Now for the actual fighting...
         while (self.bars > 0) and (Hero2.bars > 0):
             # Print the health
             print(f"\n{self.name}\t\tHLTH\t{self.health}")
