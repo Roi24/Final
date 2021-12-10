@@ -1,0 +1,139 @@
+import time
+import numpy as np
+import sys
+
+
+def delay_print(s):
+
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
+class Heroes:
+    def __init__(self, name, types, moves, EVs, health='==================='):
+        self.name = name
+        self.types = types
+        self.moves = moves
+        self.attack = EVs['ATTACK']
+        self.defense = EVs['DEFENSE']
+        self.health = health
+        self.bars = 20 # health
+
+
+    def fight(self, Hero2):
+        # fight info
+        print("-----START THE BATTLE-----")
+        print(f"\n{self.name}")
+        print("TYPE/", self.types)
+        print("ATTACK/", self.attack)
+        print("DEFENSE/", self.defense)
+        print("LVL/", 3*(1+np.mean([self.attack,self.defense])))
+        print("\nVS")
+        print(f"\n{Hero2.name}")
+        print("TYPE/", Hero2.types)
+        print("ATTACK/", Hero2.attack)
+        print("DEFENSE/", Hero2.defense)
+        print("LVL/", 3*(1+np.mean([Hero2.attack,Hero2.defense])))
+
+        time.sleep(2)
+
+        # Consider type advantages
+        version = ['Assassin', 'Marksman', 'Fighter']
+        for i,k in enumerate(version):
+            if self.types == k:
+
+                if Hero2.types == k:
+                    string_1_attack = '\nIts not very effective...'
+                    string_2_attack = '\nIts not very effective...'
+
+                # when Hero2 is STRONG
+                if Hero2.types == version[(i+1)%3]:
+                    Hero2.attack *= 2
+                    Hero2.defense *= 2
+                    self.attack /= 2
+                    self.defense /= 2
+                    string_1_attack = '\nIts not very effective...'
+                    string_2_attack = '\nIts super effective!...'
+
+                # when Hero2 is WEAK
+                if Hero2.types == version[(i+2)%3]:
+                    self.attack *= 2
+                    self.defense *= 2
+                    Hero2.attack /= 2
+                    Hero2.defense /= 2
+                    string_1_attack = '\nIts super effective!...'
+                    string_2_attack = '\nIts not very effective...'
+
+
+        # Now for the actual fighting...
+        while (self.bars > 0) and (Hero2.bars > 0):
+            # Print the health
+            print(f"\n{self.name}\t\tHLTH\t{self.health}")
+            print(f"{Hero2.name}\t\tHLTH\t{Hero2.health}\n")
+
+            print(f"Go {self.name}!")
+            for i, x in enumerate(self.moves):
+                print(f"{i+1}.", x)
+            index = int(input('Pick a move: '))
+            delay_print(f"\n{self.name} used {self.moves[index-1]}!")
+            time.sleep(1)
+            delay_print(string_1_attack)
+
+            # damage
+            Hero2.bars -= self.attack
+            Hero2.health = ""
+
+            for j in range(int(Hero2.bars+.1*Hero2.defense)):
+                Hero2.health += "="
+
+            time.sleep(1)
+            print(f"\n{self.name}\t\tHLTH\t{self.health}")
+            print(f"{Hero2.name}\t\tHLTH\t{Hero2.health}\n")
+            time.sleep(.5)
+
+            # pagpatay na ang hero
+            if Hero2.bars <= 0:
+                delay_print("\n..." + Hero2.name + ' fainted.')
+                break
+
+            # Hero2s turn
+
+            print(f"Go {Hero2.name}!")
+            for i, x in enumerate(Hero2.moves):
+                print(f"{i+1}.", x)
+            index = int(input('Pick a move: '))
+            delay_print(f"\n{Hero2.name} used {Hero2.moves[index-1]}!")
+            time.sleep(1)
+            delay_print(string_2_attack)
+
+            # Para sa Damage(titingnan)
+            self.bars -= Hero2.attack
+            self.health = ""
+
+            # Bars
+            for j in range(int(self.bars+.1*self.defense)):
+                self.health += "="
+
+            time.sleep(1)
+            print(f"{self.name}\t\tHLTH\t{self.health}")
+            print(f"{Hero2.name}\t\tHLTH\t{Hero2.health}\n")
+            time.sleep(.5)
+
+            # pag patay na
+            if self.bars <= 0:
+                delay_print("\n..." + self.name + ' fainted.')
+                break
+
+        money = np.random.choice(143)
+        delay_print(f"\nOpponent paid you ${money}.\n")
+
+
+if __name__ == '__main__':
+    #Heroes 
+
+    Lugh = Heroes ('Lugh' , 'Assassin' , ['4daggers', '1dagger', 'double_4_daggers', 'Ultimate'], {'ATTACK':10, 'DEFENSE': 7})
+    Sinon = Heroes ('Sinon','Marksman', ['Riffle', 'Bazooka', 'Sniper', 'Machine Gun'], {'ATTACK': 9,  'DEFENSE': 8})
+    Guy = Heroes ('Guy', 'Fighter', ['Pile Driving Front Lotus', 'Hidden Lotus', 'Power Kick', '8 Gate open Attack'], {'ATTACK':7, 'DEFENSE': 10})
+
+    Lugh.fight(Sinon) # Ito ay para pag lalaban na po
