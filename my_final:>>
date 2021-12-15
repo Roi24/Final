@@ -65,6 +65,8 @@ class Heroes:
                     string_1_attack = '\nIts super effective!...'
                     string_2_attack = '\nIts not very effective...'
 
+
+        # Now for the actual fighting...
         while (self.bars > 0) and (Hero2.bars > 0):
             # Print the health
             print(f"\n{self.name}\t\tHLTH\t{self.health}")
@@ -130,8 +132,11 @@ class Heroes:
 if __name__ == '__main__':
     #Heroes 
 
-    Lugh = Heroes ('Lugh' , 'Assassin' , ['4daggers', '1dagger', 'double_4_daggers', 'Ultimate'], {'ATTACK':10, 'DEFENSE': 7})
-    Sinon = Heroes ('Sinon','Marksman', ['Riffle', 'Bazooka', 'Sniper', 'Machine Gun'], {'ATTACK': 9,  'DEFENSE': 8})
-    Guy = Heroes ('Guy', 'Fighter', ['Pile Driving Front Lotus', 'Hidden Lotus', 'Power Kick', '8 Gate open Attack'], {'ATTACK':7, 'DEFENSE': 10})
+    Lugh = Heroes ('Lugh' , 'Assassin' , ['4daggers', '1dagger', 'double_4_daggers', 'Ultimate'], {'ATTACK':4, 'DEFENSE': 2})
+    Sinon = Heroes ('Sinon','Marksman', ['Riffle', 'Bazooka', 'Sniper', 'Machine Gun'], {'ATTACK': 3,  'DEFENSE': 3})
+    Guy = Heroes ('Guy', 'Fighter', ['Pile Driving Front Lotus', 'Hidden Lotus', 'Power Kick', '8 Gate open Attack'], {'ATTACK': 2, 'DEFENSE': 4})
 
+    Royce = Heroes ('Royce' , 'Fighter' , ['simple punch' , 'powerpunch' , 'Kick' , 'SuperKick'], {'ATTACK': 3, 'DEFENSE': 3})
+    Stephen = Heroes ('Stephen', 'Assassin' , ['slash', 'throw knife', 'combo 1 and 2' , 'fake combo'] , {'ATTACK': 5 , 'DEFENSE': 1})
+    CJ = Heroes ('Christine Joy', 'Marksman' , ['1 2 combo[shotgun]' , 'bomb' , '1 shot shotgun' , 'uzy'] , {'ATTACK': 4, 'DEFENSE': 2})
     Lugh.fight(Sinon) # Ito ay para pag lalaban na po
